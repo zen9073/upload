@@ -16,7 +16,7 @@ function ip_in_range($ip, $cidrs, &$match = null) {
 }
 
 function gen_uuid() {
-    return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+    return sprintf( '%04x%04x-%04x-%04x-%04x-%x04x%04x%04x',
         mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
         mt_rand( 0, 0xffff ),
         mt_rand( 0, 0x0fff ) | 0x4000,
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     array_push($results, $actual_link . '?d=' . $uuid . "." . $orig_filename);
   }
   foreach ($results as $key => $value) {
-    echo "{'status':'success','link': " . $value . "','expires':'now+30days'}\n";
+    echo "{'status':'success','link': '" . $value . "','expires':'" . date('Y-m-d', strtotime("+30 days")) . "'}\n";
   }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['d'])) {
   $uuid = preg_replace('/[^a-zA-Z0-9-.]/', '_', $_GET['d']);
